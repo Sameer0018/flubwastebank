@@ -4,9 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
+   "start": "node app.js",
+    "prepare": "husky install",
+    "test": "npm run build && cross-env NODE_ENV=test jest && npm run lint",
+     
+    "lint": "eslint . --ignore-path .gitignore",
+    "fix": "npm run lint -- --fix",
+    "build": "babel src -d lib",
+    "toc": "markdown-toc -i README.md",
+    "postversion": "git push && git push --tags",
+    "prepublish": "npm test && npm run build",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+
     
   },
   "keywords": [],
